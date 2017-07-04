@@ -1,4 +1,5 @@
 package mki.kehrwochenprojekt.mobilecomputing_sose17.Utility;
+
 /**
  * Created by Alex on 22.06.2017.
  */

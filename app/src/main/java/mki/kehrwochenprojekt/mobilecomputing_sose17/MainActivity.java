@@ -14,11 +14,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button b = (Button) findViewById(R.id.myTasksButton);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button myTasks = (Button) findViewById(R.id.myTasksButton);
+        myTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, ManageMyTasks.class);
+                startActivity(i);
+            }
+        });
+
+        Button createFlat = (Button) findViewById(R.id.createFlatButton);
+        Button manageFlat = (Button) findViewById(R.id.myFlatButton);
+        Button confirmTask = (Button) findViewById(R.id.confirmTaskButton);
+        Button createTask = (Button) findViewById(R.id.createTaskButton);
+
+        createTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, CreateTaskActivity.class);
+                startActivity(i);
+            }
+        });
+        createFlat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, AddGroupActivity.class);
+                startActivity(i);
+            }
+        });
+
+        manageFlat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, ManageGroupActivity.class);
+                startActivity(i);
+            }
+        });
+
+        confirmTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, SelectTaskToConfirmActivity.class);
                 startActivity(i);
             }
         });

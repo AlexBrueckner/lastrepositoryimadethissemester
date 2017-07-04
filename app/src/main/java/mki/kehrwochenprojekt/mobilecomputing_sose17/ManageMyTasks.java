@@ -22,32 +22,40 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenArrayAdapter;
 
 public class ManageMyTasks extends AppCompatActivity {
-
+    private KehrwochenArrayAdapter adapter;
+    private static ArrayList<String> adapterArgs = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_my_tasks);
-        ArrayList<String> adapterArgs = new ArrayList<String>();
 
-        for(Iterator<Task> taskIterator = DataHolder.getCurrentUser().getTasks().iterator();
-                taskIterator.hasNext();){
+        for (Iterator<Task> taskIterator = DataHolder.getCurrentUser().getTasks().iterator();
+             taskIterator.hasNext(); ) {
 
             Task t = taskIterator.next();
-            String taskName,taskId;
+            String taskName, taskId;
             taskName = t.getName();
             taskId = t.getTaskId();
-
-            adapterArgs.add(KehrwochenArrayAdapter.toArgumentString(taskName,taskId));
+            //Avoid duplicates -> Can't use a Set because that would need me changin EVERYTHING AGIAN
+            if(!adapterArgs.contains(KehrwochenArrayAdapter.toArgumentString(taskName, taskId))){
+            adapterArgs.add(KehrwochenArrayAdapter.toArgumentString(taskName, taskId));
+            }
         }
 
-        KehrwochenArrayAdapter adapter = new KehrwochenArrayAdapter(ManageMyTasks.this, adapterArgs,
+        adapter = new KehrwochenArrayAdapter(ManageMyTasks.this, adapterArgs,
                 ManageTaskActivity.class);
+        DataHolder.getKehrwochenAdapters().put("MyTasks",adapter);
 
         ListView taskList = (ListView) findViewById(R.id.myTasksList);
         taskList.setAdapter(adapter);
 
 
+    }
 
-
+    public KehrwochenArrayAdapter getAdapter() {
+        return adapter;
+    }
+    public static ArrayList<String> getAdapterArgs(){
+        return adapterArgs;
     }
 }

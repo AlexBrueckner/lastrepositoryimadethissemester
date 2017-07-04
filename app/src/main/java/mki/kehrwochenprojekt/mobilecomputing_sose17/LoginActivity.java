@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        Button login,register;
+        Button login, register;
 
         login = (Button) findViewById(R.id.buttonLogin);
         register = (Button) findViewById(R.id.buttonRegister);
@@ -48,27 +48,30 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    EditText name,password;
+                try {
+                    EditText name, password;
                     name = (EditText) findViewById(R.id.inputUsername);
                     password = (EditText) findViewById(R.id.inputPassword);
                     final UserLoginTask ult = new UserLoginTask(name.getText().toString(),
                             password.getText().toString());
                     ult.execute((Void) null);
-                }
-                catch(IllegalStateException ise){
+                } catch (IllegalStateException ise) {
                     ise.printStackTrace();
                 }
 
             }
         });
 
-
-
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(i);
+            }
+        });
 
 
     }
-
 
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
@@ -84,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             u = new User();
             u.setUserName(myUsername);
             u.setPassword(myPassword);
-           // myUsernameView.setText(myUsername);
+            // myUsernameView.setText(myUsername);
         }
 
         /**
@@ -95,68 +98,89 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
 
-
             System.out.println("Inside do in Background - starting request");
             //PUT Checks the login data, parse the response
-            String response = DataHolder.executeRequest("/app/user/", UserPut.getRequest(u),"PUT");
+            String response = DataHolder.executeRequest("/app/user/", UserPut.getRequest(u), "PUT");
             try {
                 JSONObject o = new JSONObject(response);
                 System.out.println("Created JSON obj from response!");
-                switch (o.getString("auth")){
+                switch (o.getString("auth")) {
                     case "ok":
                         //This is the kind of code you just cannot be proud of. But I'd rather meet
                         //the deadline. I feel sorry for you trying to decypher this and must say
                         //that writing hit hurt me as much as it hurts you reading it.
-                        User u = new User();
-                        u.setUserName(myUsername);
+                        User userInsideSwitch = new User();
+                        userInsideSwitch.setUserName(myUsername);
                         //Parse the user from the REST API
-                        JSONObject newUser = new JSONObject(DataHolder.executeRequest("/app/user", UserGet.getRequest(u),"GET"));
-                        u.setId(newUser.getString("_id"));
-                        u.setUserName(newUser.getString("userName"));
-                        u.setPassword(newUser.getString("password"));
-                        u.setForeName(newUser.getString("foreName"));
-                        u.setSurName(newUser.getString("surName"));
+                        JSONObject newUser = new JSONObject(DataHolder.executeRequest("/app/user", UserGet.getRequest(userInsideSwitch), "GET"));
+                        userInsideSwitch.setId(newUser.getString("_id"));
+                        userInsideSwitch.setUserName(newUser.getString("userName"));
+                        userInsideSwitch.setPassword(newUser.getString("password"));
+                        userInsideSwitch.setForeName(newUser.getString("foreName"));
+                        userInsideSwitch.setSurName(newUser.getString("surName"));
 
 
                         //Couple of Tracer Sysos, now proceed to parse the user tasks
-                        System.out.println("Received Response: "   + newUser.toString());
+                        System.out.println("Received Response: " + newUser.toString());
                         JSONArray tasksToParse = newUser.getJSONArray("tasks");
-                        System.out.println("Response as JSON "+tasksToParse.toString());
+                        System.out.println("Response as JSON " + tasksToParse.toString());
                         int numTasks = tasksToParse.length();
                         Gson parser = new Gson();
-                        if(numTasks > 0){
-                            for(int currTask = 0; currTask < numTasks; currTask++){
+                        if (numTasks > 0) {
+                            for (int currTask = 0; currTask < numTasks; currTask++) {
                                 //Because even our REST guy makes mistakes, we fetch the tasks
                                 //This was meant to be an array of the ACTUAL objects, not their ID
                                 //So we have to send some requests...
                                 Task t = new Task();
                                 t.setTaskId(tasksToParse.get(currTask).toString());
-                                String resp = DataHolder.executeRequest("/app/task", TaskGet.getRequest(t),"GET");
+                                String resp = DataHolder.executeRequest("/app/task", TaskGet.getRequest(t), "GET");
                                 JSONObject readMeOut = new JSONObject(resp);
                                 t.setTaskId(readMeOut.getString("_id"));
                                 t.setName(readMeOut.getString("name"));
                                 t.setGuideline(readMeOut.getString("guideline"));
                                 t.setState(Task.State.fromValue(readMeOut.getString("state")));
                                 t.setCreationDate(DateParser.parseDate(readMeOut.getString("creationDate")));
+                                if(readMeOut.has("deadline")){
                                 t.setDeadline(DateParser.parseDate(readMeOut.getString("deadline")));
+                                }
                                 System.out.println("Added task to current user: " + t);
-                                u.addTask(t);
+                                userInsideSwitch.addTask(t);
                             }
 
                         }
-
+                        System.out.println("Current User: " + DataHolder.getCurrentUser());
+                        System.out.println("Changing Current User to: " + userInsideSwitch);
                         //Once the dummy is filled, put it into our DataHolder
-                        DataHolder.setCurrentUser(u);
+                        DataHolder.setCurrentUser(userInsideSwitch);
                         //Grab the corresponding Flat from the REST API, if there is any.
                         Flat f = new Flat();
 
                         String flatResponse = DataHolder.executeRequest("/app/group",
-                                FlatGet.getRequest(u),"GET");
-                        System.out.println("Response from FlatGET: "+flatResponse);
-                        f = parser.fromJson(flatResponse,Flat.class);
+                                FlatGet.getRequest(userInsideSwitch), "GET");
+                        System.out.println("Response from FlatGET: " + flatResponse);
+                        if(flatResponse != null && !flatResponse.equals("null")){
+                            //Yes i check the content for "null" as well. Happy debugging with that.
+                            //Finding the reason for this exception hit me like a train..
+                            System.out.println("Inside if, flatResponse = " + flatResponse);
+                            JSONObject respAsJson = new JSONObject(flatResponse);
+                            JSONArray residentsJson = respAsJson.getJSONArray("residents");
+                            respAsJson.remove("residents");
+                            ArrayList<String> residentIds = new ArrayList<String>();
+                            for(int i = 0; i<residentsJson.length(); i++){
+                                User tempUser = new User();
+                                JSONObject tempUserJson = residentsJson.getJSONObject(i);
+                                residentIds.add( tempUserJson.getString("_id"));
+
+
+                            }
+                            f = parser.fromJson(respAsJson.toString(), Flat.class);
+                            f.setResidents(residentIds);
+
+
+
                         DataHolder.setCurrentFlat(f);
                         System.out.println("Created Flat and saved reference..");
-                        System.out.println(DataHolder.getCurrentFlat());
+                        System.out.println(DataHolder.getCurrentFlat());}
                         System.out.println("Auth OK");
                         return true;
                     case "err":
@@ -167,8 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("inside default, something is wrong");
                         return false;
                 }
-            }
-            catch(JSONException jsone){
+            } catch (JSONException jsone) {
                 jsone.printStackTrace();
                 return false;
             }
@@ -179,6 +202,7 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * Method called after the background task for further execution of the application
          * Starting the MainActivity when successfull and displaying an error when not
+         *
          * @param success - return statement from doInBackground()
          */
         @Override
@@ -187,14 +211,13 @@ public class LoginActivity extends AppCompatActivity {
             //Should things go awry, we let the user know that we don't know him, and ask him
             //to register with our service.
             System.out.println("Inside onPostExecute");
-            if(success){
+            if (success) {
                 System.out.println("Successfully logged in!");
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
-            }
-            else{
+            } else {
                 System.out.println("Should display toast now");
-                Toast.makeText(LoginActivity.this,"Failed to login! Please register",
+                Toast.makeText(LoginActivity.this, "Failed to login! Please register",
                         Toast.LENGTH_LONG).show();
             }
 
@@ -205,11 +228,10 @@ public class LoginActivity extends AppCompatActivity {
          */
         @Override
         protected void onCancelled() {
-            try{
+            try {
                 //Make it look like work is being done
                 Thread.sleep(2000);
-            }
-            catch(InterruptedException ie){
+            } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }
 

@@ -1,4 +1,5 @@
 package mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies;
+
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 
@@ -11,6 +12,7 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.RequestType;
 
 /**
  * Created by Alex on 25.06.2017.
+ * Constructs a JSON Object for a Request, or a request parameter, implementation dependent
  */
 
 public abstract class KehrwochenDataRequest {
@@ -21,7 +23,7 @@ public abstract class KehrwochenDataRequest {
     protected List<String> classesToExclude;
 
 
-    public KehrwochenDataRequest(){
+    public KehrwochenDataRequest() {
 
 
     }

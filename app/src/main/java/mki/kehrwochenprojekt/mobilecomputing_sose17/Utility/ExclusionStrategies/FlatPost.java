@@ -1,4 +1,5 @@
 package mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -9,27 +10,29 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels.Flat;
 
 /**
  * Created by Alex on 25.06.2017.
+ * Constructs a JSON Object for a Request, or a request parameter, implementation dependent
  */
 
 public final class FlatPost extends KehrwochenDataRequest {
     private static final List<String> excludeFields = new ArrayList<String>();
+
     //I only need this ONCE PER TYPE! Hence the static block.
-    static{
+    static {
 
         excludeFields.add("residents");
     }
-    private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields,null);
+
+    private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields, null);
 
 
-    public FlatPost(){
+    public FlatPost() {
         super();
     }
 
-    public static String getRequest(Flat f){
-        if (f != null){
+    public static String getRequest(Flat f) {
+        if (f != null) {
             return mySerializer.toJson(f);
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Expected valid user object!");
         }
     }

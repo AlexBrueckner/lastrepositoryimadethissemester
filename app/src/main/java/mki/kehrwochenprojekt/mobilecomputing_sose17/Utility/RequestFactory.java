@@ -10,13 +10,13 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.
 
 public class RequestFactory extends KehrwochenUtility {
 
-    public RequestFactory(){
+    public RequestFactory() {
 
     }
 
     public KehrwochenRequest createRequest(String apiURL, String apiEndpoint, RequestType type, String payloadType,
-                                           JSONConvertible payload){
-            return new KehrwochenRequest(apiURL,apiEndpoint,type,payloadType,payload);
+                                           JSONConvertible payload) {
+        return new KehrwochenRequest(apiURL, apiEndpoint, type, payloadType, payload);
     }
 
 

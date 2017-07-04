@@ -7,7 +7,8 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.PayloadType;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.RequestType;
 
 /**
- * Created by Alex on 22.06.2017.
+ * Created by Alex on 25.06.2017.
+ * Constructs a JSON Object for a Request, or a request parameter, implementation dependent
  */
 
 public class KehrwochenRequest extends KehrwochenUtility {
@@ -20,7 +21,7 @@ public class KehrwochenRequest extends KehrwochenUtility {
 
 
     public KehrwochenRequest(String apiURL, String apiEndpoint, RequestType requestType,
-                             String payloadType, JSONConvertible payload){
+                             String payloadType, JSONConvertible payload) {
 
         this.apiURL = apiURL;
         this.apiEndpoint = apiEndpoint;
@@ -29,7 +30,7 @@ public class KehrwochenRequest extends KehrwochenUtility {
         this.payload = payload;
     }
 
-    public JSONConvertible getResponse(){
+    public JSONConvertible getResponse() {
         return response;
     }
 }

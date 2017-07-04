@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class TasksConverter {
 
-    public static Map<String,Task> convertTasks(JSONObject tasksJSON){
+    public static Map<String, Task> convertTasks(JSONObject tasksJSON) {
 
         try {
             HashMap<String, Task> tasks = new HashMap<String, Task>();
@@ -20,19 +20,17 @@ public class TasksConverter {
             while (taskIterator.hasNext()) {
                 String key = taskIterator.next();
                 Task t = new Task();
-              //  t = (Task)t.toObject(tasksJSON.getJSONObject(key));
+                //  t = (Task)t.toObject(tasksJSON.getJSONObject(key));
                 tasks.put(key, t);
             }
 
             return tasks;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
     }
-
 
 
 }

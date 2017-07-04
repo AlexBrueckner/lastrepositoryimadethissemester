@@ -8,26 +8,26 @@ public abstract class Comment {
     protected String authorName;
     protected String text;
 
-    public Comment(String authorName, String text){
+    public Comment(String authorName, String text) {
         this.authorName = authorName;
         this.text = text;
 
     }
 
 
-    public String getAuthorName(){
+    public String getAuthorName() {
         return authorName;
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 
-    public void setAuthorName(String authorName){
+    public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         this.text = text;
     }
 }

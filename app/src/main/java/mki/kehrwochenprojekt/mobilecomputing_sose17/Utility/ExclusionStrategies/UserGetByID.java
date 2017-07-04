@@ -7,32 +7,34 @@ import java.util.List;
 
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels.User;
 
-
 /**
  * Created by Alex on 25.06.2017.
  * Constructs a JSON Object for a Request, or a request parameter, implementation dependent
  */
 
-public final class UserPost extends KehrwochenDataRequest {
+public final class UserGetByID extends KehrwochenDataRequest {
     private static final List<String> excludeFields = new ArrayList<String>();
 
     //I only need this ONCE PER TYPE! Hence the static block.
     static {
+        excludeFields.add("password");
+        excludeFields.add("foreName");
+        excludeFields.add("surName");
         excludeFields.add("tasks");
     }
 
     private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields, null);
 
 
-    public UserPost() {
+    public UserGetByID() {
         super();
     }
 
-    public static String getRequest(User u) {
-        if (u != null) {
-            return mySerializer.toJson(u);
+    public static String getRequest(User t) {
+        if (t != null) {
+            return "?userId=" + t.getId();
         } else {
-            throw new IllegalArgumentException("Expected valid user object!");
+            throw new IllegalArgumentException("Expected valid User object!");
         }
     }
 

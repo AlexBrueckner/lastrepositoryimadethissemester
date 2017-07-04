@@ -11,71 +11,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create a Flat"
-        tools:layout_editor_absoluteX="129dp"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/createTaskButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirmTaskButton"
-        app:layout_constraintVertical_bias="0.378" />
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintVertical_bias="0.024" />
 
     <Button
         android:id="@+id/myTasksButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show my Tasks"
-        android:layout_marginTop="38dp"
-        app:layout_constraintTop_toBottomOf="@+id/createFlatButton"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintRight_toLeftOf="@+id/confirmTaskButton"
+        android:layout_marginRight="57dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/createTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create a Task"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirmTaskButton"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/myTasksButton"
-        app:layout_constraintRight_toLeftOf="@+id/myFlatButton"
-        android:layout_marginRight="8dp"
-        app:layout_constraintVertical_bias="0.219"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.098" />
-
-    <Button
-        android:id="@+id/rateTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rate a Task"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/myFlatButton"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/createFlatButton"
-        app:layout_constraintLeft_toRightOf="@+id/myTasksButton"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintVertical_bias="0.461"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.714" />
+        android:layout_marginLeft="35dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:id="@+id/myFlatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Manage my Flat"
-        android:layout_marginBottom="72dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirmTaskButton"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintLeft_toRightOf="@+id/createTaskButton"
+        android:layout_marginLeft="61dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/confirmTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm a Task"
-        tools:layout_editor_absoluteX="124dp"
-        android:layout_marginBottom="75dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/myFlatButton"
+        app:layout_constraintLeft_toRightOf="@+id/createTaskButton"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.779" />
 </android.support.constraint.ConstraintLayout>

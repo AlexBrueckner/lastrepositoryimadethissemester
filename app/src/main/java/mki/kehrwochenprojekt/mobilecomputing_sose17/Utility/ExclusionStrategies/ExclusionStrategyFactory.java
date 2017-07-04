@@ -15,21 +15,21 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenUtility;
  */
 
 public class ExclusionStrategyFactory extends KehrwochenUtility {
-        public static Gson build(final List<String> fieldExclusions, final List<Class<?>> classExclusions) {
-            GsonBuilder b = new GsonBuilder();
-            b.addSerializationExclusionStrategy(new ExclusionStrategy() {
-                @Override
-                public boolean shouldSkipField(FieldAttributes f) {
-                    return fieldExclusions == null ? false : fieldExclusions.contains(f.getName());
-                }
+    public static Gson build(final List<String> fieldExclusions, final List<Class<?>> classExclusions) {
+        GsonBuilder b = new GsonBuilder();
+        b.addSerializationExclusionStrategy(new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes f) {
+                return fieldExclusions == null ? false : fieldExclusions.contains(f.getName());
+            }
 
-                @Override
-                public boolean shouldSkipClass(Class<?> clazz) {
-                    return classExclusions == null ? false : classExclusions.contains(clazz);
-                }
-            });
-            return b.create();
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return classExclusions == null ? false : classExclusions.contains(clazz);
+            }
+        });
+        return b.create();
 
-        }
     }
+}
 

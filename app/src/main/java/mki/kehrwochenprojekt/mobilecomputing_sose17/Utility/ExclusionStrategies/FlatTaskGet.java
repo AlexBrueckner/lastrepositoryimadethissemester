@@ -10,29 +10,31 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels.Flat;
 
 /**
  * Created by Alex on 25.06.2017.
+ * Constructs a JSON Object for a Request, or a request parameter, implementation dependent
  */
 
 public final class FlatTaskGet extends KehrwochenDataRequest {
     private static final List<String> excludeFields = new ArrayList<String>();
+
     //I only need this ONCE PER TYPE! Hence the static block.
-    static{
+    static {
         excludeFields.add("name");
         excludeFields.add("residents");
         excludeFields.add("penalty");
         excludeFields.add("creator");
     }
-    private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields,null);
+
+    private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields, null);
 
 
-    public FlatTaskGet(){
+    public FlatTaskGet() {
         super();
     }
 
-    public static String getRequest(Flat f){
-        if (f != null){
-            return "?flatId="+f.getID();
-        }
-        else{
+    public static String getRequest(Flat f) {
+        if (f != null) {
+            return "?flatId=" + f.getID();
+        } else {
             throw new IllegalArgumentException("Expected valid Flat object!");
         }
     }

@@ -44,23 +44,22 @@ public class Flat {
         return penalty;
     }
 
-    public String getCreator(){
+    public String getCreator() {
         return creator;
     }
 
-    public void setID(String id){
+    public void setID(String id) {
         this.flatId = id;
     }
 
-    public String getID(){
+    public String getID() {
         return flatId;
     }
 
-    public void setCreator(String creator){
-        if(creator != null && creator.length() > 0){
+    public void setCreator(String creator) {
+        if (creator != null && creator.length() > 0) {
             this.creator = creator;
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Expected valid username");
         }
     }
@@ -70,10 +69,10 @@ public class Flat {
     }
 
     @Override
-    public String toString(){
-        String s =  "Flat: " + flatId + " | " + name + " | " + creator + " | ";
-        for(String sforeach : residents){
-            s+=sforeach;
+    public String toString() {
+        String s = "Flat: " + flatId + " | " + name + " | " + creator + " | ";
+        for (String sforeach : residents) {
+            s += " - " +sforeach+" - ";
         }
         return s;
     }

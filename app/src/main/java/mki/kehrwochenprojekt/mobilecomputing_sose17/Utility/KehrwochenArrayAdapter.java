@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import mki.kehrwochenprojekt.mobilecomputing_sose17.R;
+
 import android.view.*;
 
 /**
@@ -24,9 +25,9 @@ public final class KehrwochenArrayAdapter extends ArrayAdapter {
     private ArrayList<String> adapterArguments;
     Class targetActivity;
 
-    public KehrwochenArrayAdapter(Context c, ArrayList<String> args, Class target){
+    public KehrwochenArrayAdapter(Context c, ArrayList<String> args, Class target) {
 
-        super(c,-1,args);
+        super(c, -1, args);
         myContext = c;
         adapterArguments = args;
         targetActivity = target;
@@ -34,41 +35,41 @@ public final class KehrwochenArrayAdapter extends ArrayAdapter {
 
         System.out.println("DEBUG - KAA Constructor\n----");
         System.out.println("adapterArguments: ");
-        for(Iterator<String> it = adapterArguments.iterator(); it.hasNext();){
+        for (Iterator<String> it = adapterArguments.iterator(); it.hasNext(); ) {
             System.out.println("\n --------- \n " + it.next() + "\n ---------");
         }
+        this.setNotifyOnChange(true);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View newView = inflater.inflate(R.layout.button_list_entry,parent,false);
+        View newView = inflater.inflate(R.layout.button_list_entry, parent, false);
         final Button b = (Button) newView.findViewById(R.id.listEntryButton);
         b.setTag(new Integer(position));
         b.setText(adapterArguments.get(position).split("@")[0]);
-        b.setOnClickListener(new View.OnClickListener(){
+        b.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
-            public void onClick(View v){
-                    int index = (int) b.getTag();
-                    String s = adapterArguments.get(index);
-                    String dataToFetch = adapterArguments.get(index).split("@")[1];
-                    Intent i = new Intent(myContext,targetActivity);
-                    i.putExtra("data",dataToFetch);
-                    i.putExtra("adapterList",adapterArguments);
-                    myContext.startActivity(i);
-                }
+            public void onClick(View v) {
+                int index = (int) b.getTag();
+                String s = adapterArguments.get(index);
+                String dataToFetch = adapterArguments.get(index).split("@")[1];
+                Intent i = new Intent(myContext, targetActivity);
+                i.putExtra("data", dataToFetch);
+                i.putExtra("adapterList", adapterArguments);
+                myContext.startActivity(i);
+            }
         });
-
         return newView;
     }
 
-    public static String toArgumentString(String buttonName, String argumentName){
+    public static String toArgumentString(String buttonName, String argumentName) {
         return buttonName + "@" + argumentName;
     }
 
-    public ArrayList<String> getArgs(){
+    public ArrayList<String> getArgs() {
         return adapterArguments;
     }
 

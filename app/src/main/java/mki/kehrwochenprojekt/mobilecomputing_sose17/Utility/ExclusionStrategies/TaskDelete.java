@@ -13,12 +13,13 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels.Task;
 
 /**
  * Created by Alex on 25.06.2017.
+ * Constructs a JSON Object for a Request, or a request parameter, implementation dependent
  */
-
 public final class TaskDelete extends KehrwochenDataRequest {
     private static final List<String> excludeFields = new ArrayList<String>();
+
     //I only need this ONCE PER TYPE! Hence the static block.
-    static{
+    static {
         excludeFields.add("name");
         excludeFields.add("creationDate");
         excludeFields.add("deadline");
@@ -27,27 +28,26 @@ public final class TaskDelete extends KehrwochenDataRequest {
         excludeFields.add("guideline");
         excludeFields.add("images");
     }
-    private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields,null);
+
+    private static final Gson mySerializer = ExclusionStrategyFactory.build(excludeFields, null);
 
 
-    public TaskDelete(){
+    public TaskDelete() {
         super();
     }
 
-    public static String getRequest(Task t){
-        if (t != null){
-            try{
+    public static String getRequest(Task t) {
+        if (t != null) {
+            try {
                 JSONObject o = new JSONObject(mySerializer.toJson(t));
                 return "{ \"taskId\" : \"" + o.getString("_id") + "\" }";
-            }
-            catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
                 return "{ \"thisApisucks\" : \"realHard\"}";
 
             }
 
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Expected valid Task object!");
         }
     }

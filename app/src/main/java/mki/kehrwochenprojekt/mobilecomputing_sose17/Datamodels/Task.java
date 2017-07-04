@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,8 +13,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Task
  * <p>
- *
- *
  */
 public class Task {
 
@@ -46,11 +45,11 @@ public class Task {
     private String guideline;
 
 
-    public Task(){
+    public Task() {
         comments = new ArrayList<String>();
     }
 
-    public void addComment(String s){
+    public void addComment(String s) {
         comments.add(s);
     }
 
@@ -102,16 +101,16 @@ public class Task {
         this.guideline = guideline;
     }
 
-    public String getTaskId(){
+    public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId){
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Task - ID = " + taskId + " | " + name + " | " + creationDate + " | " + deadline +
                 " | " + guideline + " | " + state;
     }
@@ -128,7 +127,7 @@ public class Task {
         private final static Map<String, Task.State> CONSTANTS = new HashMap<String, Task.State>();
 
         static {
-            for (Task.State c: values()) {
+            for (Task.State c : values()) {
                 CONSTANTS.put(c.value, c);
             }
         }

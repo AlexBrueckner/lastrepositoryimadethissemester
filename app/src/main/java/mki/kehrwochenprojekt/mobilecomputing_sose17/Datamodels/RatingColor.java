@@ -5,5 +5,5 @@ package mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels;
  */
 
 public enum RatingColor {
-    RED,YELLOW,GREEN
+    RED, YELLOW, GREEN
 }

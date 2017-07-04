@@ -2,6 +2,7 @@ package mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,8 +10,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * User
  * <p>
- *
- *
  */
 public class User {
     @SerializedName("_id")
@@ -52,7 +51,7 @@ public class User {
         return foreName;
     }
 
-    public User(){
+    public User() {
         tasks = new ArrayList<Task>();
     }
 
@@ -76,15 +75,15 @@ public class User {
         this.tasks = tasks;
     }
 
-    public void addTask(Task t){
+    public void addTask(Task t) {
         tasks.add(t);
     }
 
-    public String getId(){
+    public String getId() {
         return _id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         _id = id;
     }
 
