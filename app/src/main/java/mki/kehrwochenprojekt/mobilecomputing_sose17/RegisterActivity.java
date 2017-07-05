@@ -37,9 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
                 u.setPassword(password.getText().toString());
                 u.setForeName(forename.getText().toString());
                 u.setSurName(surname.getText().toString());
-
-                String response = DataHolder.executeRequest("/app/user/", UserPost.getRequest(u)
-                        ,"POST");
+                String response = DataHolder.executeRequest("/app/user/", UserPost.getRequest(u),"POST");
                 Toast.makeText(RegisterActivity.this, "Successfully registered. Please login now.",
                         Toast.LENGTH_LONG).show();
                 finish();
