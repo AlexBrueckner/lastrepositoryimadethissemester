@@ -21,6 +21,10 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.TaskUserGet;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenArrayAdapter;
 
+/***
+ * Creates a ListView with Buttons representing a Task, redirects to corresponding ManageTask
+ * Activity.
+ */
 public class ManageMyTasks extends AppCompatActivity {
     private KehrwochenArrayAdapter adapter;
     private static ArrayList<String> adapterArgs = new ArrayList<String>();
@@ -28,7 +32,7 @@ public class ManageMyTasks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_my_tasks);
-
+        //Get all the current users tasks
         for (Iterator<Task> taskIterator = DataHolder.getCurrentUser().getTasks().iterator();
              taskIterator.hasNext(); ) {
 
@@ -36,12 +40,13 @@ public class ManageMyTasks extends AppCompatActivity {
             String taskName, taskId;
             taskName = t.getName();
             taskId = t.getTaskId();
+            //And stuff them into the adapter
             //Avoid duplicates -> Can't use a Set because that would need me changin EVERYTHING AGIAN
             if(!adapterArgs.contains(KehrwochenArrayAdapter.toArgumentString(taskName, taskId))){
             adapterArgs.add(KehrwochenArrayAdapter.toArgumentString(taskName, taskId));
             }
         }
-
+        //Now assign the adapter and let it do its magic
         adapter = new KehrwochenArrayAdapter(ManageMyTasks.this, adapterArgs,
                 ManageTaskActivity.class);
         DataHolder.getKehrwochenAdapters().put("MyTasks",adapter);

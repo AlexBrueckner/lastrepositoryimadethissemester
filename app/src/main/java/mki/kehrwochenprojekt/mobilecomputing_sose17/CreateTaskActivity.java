@@ -19,6 +19,9 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.DateParser;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.TaskPost;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenArrayAdapter;
 
+/***
+ * Collects Data from the Layout and sends it to the REST API for creation of a Task
+ */
 public class CreateTaskActivity extends AppCompatActivity {
 
     @Override
@@ -40,7 +43,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Task t = new Task();
                 User u = new User();
-
+                //Collect data and fill dummy objects for the requests with them
                 u.setUserName(userName.getText().toString());
                 t.setName(taskName.getText().toString());
                 Date d = new Date();
@@ -49,6 +52,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                 d = DateParser.parseDate(taskDeadline.getText().toString());
                 t.setDeadline(d);
                 t.setGuideline(taskGuideline.getText().toString());
+                //Send prepared data and aprse response
                 try {
                 String response = DataHolder.executeRequest("/app/task/", TaskPost.getRequest(u,t),
                         "POST");

@@ -16,6 +16,10 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.DataHolder;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.FlatUserDelete;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.UserGetByID;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenArrayAdapter;
+/***
+ * Activity called my SelectResidentToManage
+ * OFfers Management functions for this single resident instance
+ */
 
 public class ManageSingleResident extends AppCompatActivity {
 
@@ -23,6 +27,7 @@ public class ManageSingleResident extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Fetch Data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_single_resident);
         final Button b = (Button) findViewById(R.id.deleteUserFromFlatButton);
@@ -36,17 +41,18 @@ public class ManageSingleResident extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+        //Build dummies
                 User u = new User();
                 Flat f = new Flat();
-
+        //Fill them with the data supplied by the adapter argument
                 String arg = getIntent().getStringExtra("data");
                 u.setId(arg);
                 f.setID(DataHolder.getCurrentFlat().getID());
-
+        //See if the REST guy can find something
                 String response = DataHolder.executeRequest("/app/user/id",
                         UserGetByID.getRequest(u),"GET");
                 try{
+                    //Parse the result, put it into the adapter, and notify him of the change
                     JSONObject jsono = new JSONObject(response);
                     u.setUserName(jsono.getString("userName"));
                     response = DataHolder.executeRequest("/app/group/user/",

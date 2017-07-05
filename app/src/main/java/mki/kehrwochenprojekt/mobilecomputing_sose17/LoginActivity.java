@@ -200,9 +200,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /**
-         * Method called after the background task for further execution of the application
-         * Starting the MainActivity when successfull and displaying an error when not
-         *
+         * Take the result from the doInBackground and act according to the value
          * @param success - return statement from doInBackground()
          */
         @Override

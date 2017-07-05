@@ -20,6 +20,9 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.FlatPost;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.FlatPut;
 
+/***
+ * Sends a POST to the REST API after Data has been collected through the Edit Texts in the layout.
+ */
 public class AddGroupActivity extends AppCompatActivity {
 
     @Override
@@ -27,17 +30,18 @@ public class AddGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
 
-
+    //Find the buttons
         Button flatCreateButton = (Button) findViewById(R.id.flatCreateButton);
       final  EditText penalty, groupName;
         penalty = (EditText) findViewById(R.id.penalty);
         groupName = (EditText) findViewById(R.id.groupName);
 
 
-
+        //Set the onclick listener
         flatCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Try to create a Flat through the Rest API
                 Flat f = new Flat();
                 f.setPenalty(penalty.getText().toString());
                 f.setName(groupName.getText().toString());
@@ -48,7 +52,7 @@ public class AddGroupActivity extends AppCompatActivity {
                 try {
 
 
-
+                //Add the creator to the Flat and print the Flat to check if it worked
                     JSONObject respJson = new JSONObject(response);
                     f.setID(respJson.getString("flatId"));
                     response = DataHolder.executeRequest("/app/group/",
@@ -61,7 +65,7 @@ public class AddGroupActivity extends AppCompatActivity {
                     JSONArray currResidents;
 
                     f.setID(respJson.getString("_id"));
-
+                    //Parse the residents. Did not work with Gson :(
                     currResidents = respJson.getJSONArray("residents");
                     if(currResidents.length() > 0){
                         System.out.println("Flat has residents");

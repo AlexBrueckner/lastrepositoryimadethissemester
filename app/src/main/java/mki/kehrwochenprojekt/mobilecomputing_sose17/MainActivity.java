@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/***
+ * MainActivity
+ * Redirects to other activities, depending on depressed button
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -28,6 +28,10 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.TaskGet;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.TaskPatch;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenArrayAdapter;
+/**
+ * ManageTaskActivity
+ * OFfers functions for manipulation of tasks
+ */
 
 public class ManageTaskActivity extends AppCompatActivity {
 
@@ -35,13 +39,15 @@ public class ManageTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_task);
-
+        //Prepare local data and Views
         String taskToRead = getIntent().getStringExtra("data");
         final Task tlocal = new Task();
         tlocal.setTaskId(taskToRead);
+        //Fetch the task data from the REST API
+        //For some reason this did not work with USerTaskGet
         String requestedTask = DataHolder.executeRequest("/app/task", TaskGet.getRequest(tlocal), "GET");
         System.out.println("DEBUG: Requested Task = " + requestedTask);
-
+        //Prepare Views
         final TextView name, creationDate, deadline, guideline, comments, state;
         name = (TextView) findViewById(R.id.displayTaskName);
         creationDate = (TextView) findViewById(R.id.displayTaskCreationDate);
@@ -56,6 +62,7 @@ public class ManageTaskActivity extends AppCompatActivity {
 
 
         try {
+            //Parse the API REsponse
             JSONObject parsedTask = new JSONObject(requestedTask);
             name.setText(parsedTask.getString("name"));
             tlocal.setName(parsedTask.getString("name"));
@@ -63,7 +70,7 @@ public class ManageTaskActivity extends AppCompatActivity {
             if(parsedTask.has("deadline")){
             deadline.setText(DateParser.parseDate(parsedTask.getString("deadline")).toString());
             }
-
+            //Comments could not properly be serialized so we didi t manually
             JSONArray commentsJson = parsedTask.getJSONArray("comments");
             if (commentsJson != null && commentsJson.length() > 0) {
                 String commentString = "";
@@ -76,6 +83,8 @@ public class ManageTaskActivity extends AppCompatActivity {
             state.setText(parsedTask.getString("state"));
             guideline.setText(parsedTask.getString("guideline"));
 
+            //If we wish to update the Task, we must prepare a TaskPatcher and send the REquest
+            //through it
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -91,7 +100,8 @@ public class ManageTaskActivity extends AppCompatActivity {
                     System.out.println("Task updated!");
                 }
             });
-
+            //And if we wish to get rid of it, we just need to send a delete request and update
+            //the corresponding adapter by notifying it of a change in the DataSet.
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

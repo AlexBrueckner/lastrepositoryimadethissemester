@@ -17,6 +17,10 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.UserGetByID;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.KehrwochenArrayAdapter;
 
+/***
+ * SelectResidentToManage
+ * Activity for selection of a resident pending manipulation.
+ */
 public class SelectResidentToManage extends AppCompatActivity {
 
     private static ArrayList<String> adapterArgs;
@@ -30,7 +34,7 @@ public class SelectResidentToManage extends AppCompatActivity {
         System.out.println("Current Flat = " + DataHolder.getCurrentFlat());
         System.out.println("Current Flat REsident number: " + DataHolder.getCurrentFlat().
                 getResidents().size());
-
+        //Grab all the residents and shove them into the adapter
         for (Iterator<String> userIterator = DataHolder.getCurrentFlat().getResidents().iterator();
              userIterator.hasNext();) {
             User temp = new User();
@@ -39,7 +43,7 @@ public class SelectResidentToManage extends AppCompatActivity {
             String userResponse = DataHolder.executeRequest("/app/user/id", UserGetByID.getRequest(temp),
                     "GET");
             try{
-
+                //assuming the Jsons are valid and are not already contained in the adapter
                 JSONObject tempJson = new JSONObject(userResponse);
                 temp.setUserName(tempJson.getString("userName"));
                 //Avoid duplicates -> Can't use a Set because that would need me changin EVERYTHING
@@ -58,7 +62,7 @@ public class SelectResidentToManage extends AppCompatActivity {
 
 
         }
-
+        //assign the adapter and be done with it!
         adapter = new KehrwochenArrayAdapter(SelectResidentToManage.this, adapterArgs,
                 ManageSingleResident.class);
         DataHolder.getKehrwochenAdapters().put("MyUsers",adapter);

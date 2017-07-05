@@ -23,10 +23,5 @@ public abstract class KehrwochenDataRequest {
     protected List<String> classesToExclude;
 
 
-    public KehrwochenDataRequest() {
-
-
-    }
-
 }
 

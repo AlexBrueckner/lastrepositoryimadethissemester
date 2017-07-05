@@ -12,6 +12,10 @@ import mki.kehrwochenprojekt.mobilecomputing_sose17.Datamodels.Flat;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.DataHolder;
 import mki.kehrwochenprojekt.mobilecomputing_sose17.Utility.ExclusionStrategies.FlatPatch;
 
+/***
+ * ManageGroupActivity
+ * Offers functions to manage groups, such as changing values and removing residents
+ */
 public class ManageGroupActivity extends AppCompatActivity {
 
     @Override
@@ -31,11 +35,11 @@ public class ManageGroupActivity extends AppCompatActivity {
         System.out.println(numResidents);
         System.out.println(name);
 
-
+        //Fill the TextViews with the CURRENTLY ACTIVE DATA
         penalty.setText(temp.getPenalty());
         numResidents.setText(""+temp.getResidents().size());
         name.setText(temp.getName());
-
+        //Prepare the buttons for redirection to the ManageResidentsACtivity
         Button manageResidents = (Button) findViewById(R.id.buttonManageResidents);
         Button updateGroup = (Button) findViewById(R.id.buttonupdateGroup);
         manageResidents.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +57,7 @@ public class ManageGroupActivity extends AppCompatActivity {
                 f.setID(DataHolder.getCurrentFlat().getID());
                 f.setName(name.getText().toString());
                 f.setPenalty(penalty.getText().toString());
-
+                //Prepare a FlatPatcher instance with the supplied data, then execute a PATCH request
                 FlatPatch fp = new FlatPatch(f.getID(),f.getName(),f.getPenalty());
                 String response = DataHolder.executeRequest("/app/group/", fp.getRequest(f),"PATCH");
                 System.out.println("Response was: " + response);
