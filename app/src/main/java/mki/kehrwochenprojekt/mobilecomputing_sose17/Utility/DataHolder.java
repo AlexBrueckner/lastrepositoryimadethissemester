@@ -23,7 +23,8 @@ public final class DataHolder {
     static {
         currentUser = new User();
         currentFlat = new Flat();
-        client = new RESTClient("http://10.0.2.2:8080");
+        //client = new RESTClient("http://10.0.2.2:8080");
+        client = new RESTClient("http://134.103.176.121:8080");
     }
 
     public static void setCurrentUser(User u) {
